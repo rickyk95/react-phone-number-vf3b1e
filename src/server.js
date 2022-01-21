@@ -1,9 +1,54 @@
-const app = require('express')();
-
-app.listen(3000,()=>{
-  console.log('Listening on',3000)
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+app.listen(5000,()=>{
+  console.log('Listening on',5000)
+})
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+async function mongooseConnect(){
+  try{
+    await mongoose.connect('mongodb+srv://user1:otBPTi5iCf3VAyLj@cluster0.cpoyx.mongodb.net/phoneNumbersCollection?retryWrites=true&w=majority')
+    console.log('Successfully connected')
+  }catch(e){
+    console.log(e)
+  }
+}
+mongooseConnect()
+const ContactSchema = new Schema({
+  firstName:{
+    type:String,
+    lowercase:true
+  },
+  lastName:{
+    type:String,
+    lowercase:true
+  },
+  phoneNumber:{
+    type:Number
+  }
 })
 
-app.get('/',()=>{
-  res.send('Hi there')
+const Contact = mongoose.model('contact',ContactSchema)
+
+app.get('/',cors(), async (req,res)=>{
+  try{
+    const contacts = await Contact.find({}).sort({lastName:'asc'})
+    res.status(200).send(contacts)
+  }catch(e){
+    res.status(404).send('Hubo un problema')
+  }
+})
+
+app.post('/newContact', cors(),async (req,res)=>{
+  try{
+    const contact = new Contact(req.body)
+    await contact.save()
+    res.status(201).end()
+  }catch(e){
+    res.status(400).send(e)
+  }
 })
