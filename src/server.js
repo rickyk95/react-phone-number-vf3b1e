@@ -52,3 +52,27 @@ app.post('/newContact', cors(),async (req,res)=>{
     res.status(400).send(e)
   }
 })
+
+app.put('/modifyEntry',cors(), async (req,res)=>{
+  try{
+    console.log(req.body)
+    const {newFirstName,newLastName,newPhoneNumber} = req.body.newValues
+    console.log(req.body.oldValues)
+    await Contact.findOneAndUpdate(req.body.oldValues,{firstName:newFirstName,lastName:newLastName,phoneNumber:newPhoneNumber})
+    res.status(201).send()
+  }catch(e){
+    console.log(e)
+    res.status(404).send(e)
+  }
+})
+
+app.delete('/removeEntry',cors(),async (req,res)=>{
+    try{
+      console.log('received')
+      await Contact.findOneAndDelete(req.body)
+      res.status(202).send()
+    }catch(e){
+        console.log(e)
+        res.status(204).send()
+    }
+})

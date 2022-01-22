@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.2",
+    "mongoose": "^6.1.7",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router-dom": "^6.2.1"
@@ -16,5 +18,17 @@
   },
   "devDependencies": {
     "react-scripts": "latest"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
