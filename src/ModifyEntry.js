@@ -7,8 +7,6 @@ export default function ModifyEntry({getList,firstName,lastName,phoneNumber,setF
   const [newPhoneNumber,modifyPhoneNumber] = useState('')
   const emptyFieldWarning = document.querySelectorAll('small')
   const inputs = Array.from(document.querySelectorAll('input.modify'))
-  console.log(inputs,1000)
-
   function validateModification(){
     let incompleteFields;
     let phoneNotANumber;

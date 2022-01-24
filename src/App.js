@@ -42,9 +42,6 @@ const PhoneBook = ({ onSubmit, getList, firstName, setFirstName, lastName, setLa
     return true
   }
 
-  function deleteEntry() {
-
-  }
 
   function submitForm(e) {
     e.preventDefault()
