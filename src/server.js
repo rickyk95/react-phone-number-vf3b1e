@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 async function mongooseConnect(){
   try{
-    await mongoose.connect('mongodb+srv://user1:otBPTi5iCf3VAyLj@cluster0.cpoyx.mongodb.net/phoneNumbersCollection?retryWrites=true&w=majority')
+    await mongoose.connect('mongodb+srv://user1:otBPTi5iCf3VAyLj@cluster0.cpoyx.mongodb.net/phoneNumbersCollection?retryWrites=true&w=majority',{useNewUrlParser:true,useUnifiedTopology:true,autoIndex:true})
     console.log('Successfully connected')
   }catch(e){
     console.log(e)
@@ -21,18 +21,34 @@ mongooseConnect()
 const ContactSchema = new Schema({
   firstName:{
     type:String,
-    lowercase:true
+    lowercase:true,
+    unique:true,
+    index:true
   },
   lastName:{
     type:String,
     lowercase:true
   },
   phoneNumber:{
-    type:Number
+    type:Number,
+    unique:true,
+    required:true
   }
 })
 
 const Contact = mongoose.model('contact',ContactSchema)
+
+// Contact.on('index', function(err) { 
+
+//   if (err) {
+//     console.log("Could not create index: ", err)
+//   } else {
+//     console.log("Index created")
+//   }
+
+// });
+
+
 
 app.get('/',cors(), async (req,res)=>{
   try{
@@ -49,7 +65,7 @@ app.post('/newContact', cors(),async (req,res)=>{
     await contact.save()
     res.status(201).end()
   }catch(e){
-    res.status(400).send(e)
+    res.status(409).send(e)
   }
 })
 

@@ -110,3 +110,18 @@ td {
   padding: 40px;
   z-index: 1;
 }
+.error-div {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: whitesmoke;
+  box-shadow: 5px 5px 5px black;
+  padding: 35px;
+  text-align: center;
+  display: none;
+}
+
+.error-div h5 {
+  margin-top: 10px;
+}
